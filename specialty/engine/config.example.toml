@@ -1,0 +1,27 @@
+# Copy to config.toml (same folder you run `fullbacklog` from) and edit.
+
+[sender]
+first_name = "Jordan"
+agency = "FullBacklog"
+calendar_link = "https://cal.com/your-link/15min"   # only used in breakup emails
+website = "https://getfullbacklog.com"
+
+[targeting]
+# Trades to sell to first. Keys: fire_protection, electrical, drywall, painting, flooring, glazing,
+# concrete, masonry, roofing, insulation, steel, mechanical, plumbing, earthwork
+trades = ["drywall", "painting", "flooring", "electrical", "concrete", "glazing",
+          "fire_protection", "roofing", "insulation", "masonry"]
+min_export_score = 35
+permit_days = 90               # window for permit stats and hooks
+min_commercial_value = 250000  # unlabeled permits at/above this count as commercial
+as_of = ""                     # "" = today; or YYYY-MM-DD to pin the permit window
+
+# Metro -> cities. A lead in Round Rock gets Austin's permit data and top GCs.
+[markets]
+Austin = ["Austin", "Round Rock", "Cedar Park", "Pflugerville", "Georgetown", "Leander", "Kyle", "Buda", "San Marcos"]
+# Denver = ["Denver", "Aurora", "Lakewood", "Englewood", "Littleton", "Westminster", "Arvada", "Centennial"]
+
+[ai]
+model = "claude-opus-5-5"
+effort = "low"
+workers = 4

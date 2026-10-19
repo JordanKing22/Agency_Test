@@ -1,0 +1,22 @@
+[project]
+name = "fullbacklog-engine"
+version = "0.1.0"
+description = "Outreach engine for the FullBacklog agency: permit-based GC leaderboards, sub lead scoring, personalization, export."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+ai = ["anthropic>=1.15"]
+
+[project.scripts]
+fullbacklog = "fullbacklog.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["fullbacklog*"]
+
+[tool.setuptools.package-data]
+fullbacklog = ["sequences/*.toml"]

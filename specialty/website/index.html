@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FullBacklog for Subcontractors</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="FullBacklog gets commercial specialty subcontractors onto more general contractors' bid lists and follows up on every bid.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=JetBrains+Mono:wght@400;600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: a construction drawing sheet. Bond-paper ground with a faint grid, graphite linework,
+   red markup (revision clouds, delta notes) and highlighter for "your scope". */
+:root {
+  --sheet: #f5f6f4;       /* drawing bond */
+  --panel: #ffffff;
+  --graphite: #1c2024;    /* linework + text */
+  --pencil: #5b636b;      /* secondary text */
+  --line: #cdd3d7;        /* rules, grid */
+  --grid: rgba(28, 32, 36, 0.045);
+  --redline: #c9332b;     /* markup: accent */
+  --blueline: #2b5c9e;    /* links, secondary data */
+  --highlight: #ffe46b;   /* estimator's highlighter */
+  --highlight-ink: #1c2024;
+  --font-display: "Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(1.9rem, 4vw, 2.7rem);
+  --step-4: clamp(2.3rem, 5.6vw, 4.1rem);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sheet: #121518; --panel: #1a1f23; --graphite: #e5e8eb; --pencil: #9ba4ac; --line: #2c343a;
+    --grid: rgba(229, 232, 235, 0.04); --redline: #ff6a5c; --blueline: #86b4ff;
+    --highlight: rgba(255, 228, 107, 0.3); --highlight-ink: #fff6c9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sheet: #121518; --panel: #1a1f23; --graphite: #e5e8eb; --pencil: #9ba4ac; --line: #2c343a;
+  --grid: rgba(229, 232, 235, 0.04); --redline: #ff6a5c; --blueline: #86b4ff;
+  --highlight: rgba(255, 228, 107, 0.3); --highlight-ink: #fff6c9;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background-color: var(--sheet);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--graphite);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+a { color: var(--blueline); }
+:focus-visible { outline: 3px solid var(--redline); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+img, svg { max-width: 100%; }
+
+.wrap {
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.band { padding-block: clamp(56px, 8vw, 96px); }
+.band + .band { border-top: 1px solid var(--line); }
+
+.tag {
+  font-family: var(--font-data); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pencil);
+}
+.tag b { color: var(--redline); font-weight: 600; }
+.head { display: grid; gap: 12px; max-width: 46rem; margin-bottom: 40px; }
+.head h2, .display {
+  font-family: var(--font-display); font-stretch: 118%; font-weight: 800;
+  font-size: var(--step-3); line-height: 1.04; letter-spacing: -0.01em;
+}
+.head p { color: var(--pencil); font-size: var(--step-1); }
+mark { background: var(--highlight); color: var(--highlight-ink); padding: 0 0.15em; border-radius: 2px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 22px;
+  border-radius: 3px; border: 2px solid var(--graphite); font: 700 var(--step-0)/1.1 var(--font-body);
+  text-decoration: none; cursor: pointer; transition: transform 120ms ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--redline); border-color: var(--redline); color: #fff; }
+.btn-line { background: transparent; color: var(--graphite); }
+
+/* revision cloud overlay (drawn by script) + delta note */
+.cloud { position: relative; }
+.cloud > svg.cloud-line { position: absolute; inset: -12px; width: calc(100% + 24px); height: calc(100% + 24px); pointer-events: none; overflow: visible; }
+.cloud-line path { fill: none; stroke: var(--redline); stroke-width: 1.6; stroke-linejoin: round; }
+.delta {
+  display: inline-grid; place-items: center; width: 1.6em; height: 1.4em; padding-top: 0.25em;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%); background: var(--redline); color: #fff;
+  font: 600 0.72rem/1 var(--font-data); vertical-align: middle;
+}
+
+/* ---------- header ---------- */
+.topbar { padding-block: 18px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--graphite); }
+.brand { font-family: var(--font-display); font-stretch: 125%; font-weight: 900; font-size: 1.35rem; letter-spacing: -0.01em; text-decoration: none; color: var(--graphite); display: inline-flex; gap: 10px; align-items: center; }
+.brand-mark { width: 22px; height: 22px; border: 2px solid var(--graphite); position: relative; }
+.brand-mark::after { content: ""; position: absolute; inset: 3px 3px 9px 3px; background: var(--redline); }
+.issued { font-family: var(--font-data); font-size: 0.75rem; color: var(--pencil); letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* ---------- hero ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr); gap: 56px; align-items: center; padding-block: clamp(40px, 6vw, 80px); }
+.hero-copy { display: grid; gap: 22px; min-width: 0; }
+.hero h1 { font-family: var(--font-display); font-stretch: 112%; font-weight: 850; font-size: var(--step-4); line-height: 1.0; letter-spacing: -0.02em; }
+.hero h1 .red { color: var(--redline); }
+.lede { font-size: var(--step-1); color: var(--pencil); max-width: 34rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.promise { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--font-data); font-size: 0.8rem; color: var(--pencil); }
+.promise span::before { content: "— "; color: var(--redline); }
+
+.audit-card { background: var(--panel); border: 1.5px solid var(--graphite); min-width: 0; }
+.audit-title { display: grid; grid-template-columns: minmax(0, 1fr) auto; border-bottom: 1.5px solid var(--graphite); }
+.audit-title > div { padding: 10px 14px; }
+.audit-title > div + div { border-left: 1.5px solid var(--graphite); text-align: right; }
+.audit-title strong { display: block; font-family: var(--font-display); font-stretch: 115%; font-size: 1rem; }
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.audit-card table { font-family: var(--font-data); font-size: 0.8rem; min-width: 430px; }
+.audit-card th, .audit-card td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+.audit-card th { font-weight: 600; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--pencil); }
+.audit-card td.num, .audit-card th.num { text-align: right; }
+.audit-card td.gc { font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; }
+.yes { color: var(--pencil); }
+.no { color: var(--redline); font-weight: 600; }
+.audit-foot { padding: 22px 18px 22px; display: flex; flex-wrap: wrap; gap: 22px 20px; align-items: center; justify-content: space-between; }
+.audit-foot .cloud { padding: 6px 10px; font-weight: 700; margin: 6px 4px; }
+.audit-foot small { font-family: var(--font-data); color: var(--pencil); font-size: 0.7rem; }
+
+/* ---------- problems ---------- */
+.notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
+.note { display: grid; gap: 10px; align-content: start; border-top: 2px solid var(--graphite); padding-top: 16px; }
+.note h3 { font-family: var(--font-display); font-stretch: 110%; font-weight: 800; font-size: var(--step-2); line-height: 1.1; }
+.note p { color: var(--pencil); }
+
+/* ---------- calculator ---------- */
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: 36px; align-items: start; }
+.calc-form { display: grid; gap: 14px; background: var(--panel); border: 1px solid var(--line); padding: 24px; }
+.field { display: grid; grid-template-columns: minmax(0, 1fr) 9.5rem; gap: 14px; align-items: center; padding-bottom: 14px; border-bottom: 1px dashed var(--line); }
+.field:last-child { border-bottom: 0; padding-bottom: 0; }
+.field label { font-weight: 600; }
+.field small { display: block; color: var(--pencil); font-weight: 400; font-size: var(--step--1); }
+.input { position: relative; }
+.input input {
+  width: 100%; min-height: 44px; padding: 8px 10px 8px 26px; border: 1.5px solid var(--graphite); border-radius: 2px;
+  background: var(--sheet); color: var(--graphite); font: 600 0.95rem var(--font-data); text-align: right; font-variant-numeric: tabular-nums;
+}
+.input input:focus { outline: none; border-color: var(--redline); box-shadow: 0 0 0 3px color-mix(in srgb, var(--redline) 25%, transparent); }
+.input .unit { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--pencil); font-family: var(--font-data); font-size: 0.85rem; pointer-events: none; }
+.result { display: grid; gap: 20px; position: sticky; top: 24px; }
+.result .row { display: grid; gap: 2px; padding-bottom: 18px; border-bottom: 1.5px solid var(--graphite); }
+.result .label { font-family: var(--font-data); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--pencil); }
+.result output { font-family: var(--font-display); font-stretch: 110%; font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.5rem); font-variant-numeric: tabular-nums; line-height: 1.1; }
+.result .big output { font-size: clamp(2.4rem, 5.5vw, 3.4rem); }
+.result .big .cloud { display: inline-block; padding: 2px 10px; margin: 8px 6px; }
+.result .fine { color: var(--pencil); font-size: var(--step--1); }
+
+/* ---------- scope of work ---------- */
+.scopes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.scope { background: var(--panel); border: 1.5px solid var(--graphite); display: grid; grid-template-rows: auto auto 1fr auto; min-width: 0; }
+.scope-head { display: flex; justify-content: space-between; gap: 12px; padding: 10px 18px; border-bottom: 1.5px solid var(--graphite); font-family: var(--font-data); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pencil); }
+.scope-title { padding: 20px 18px 4px; display: grid; gap: 6px; }
+.scope-title h3 { font-family: var(--font-display); font-stretch: 118%; font-weight: 850; font-size: var(--step-2); line-height: 1.05; }
+.price { font-family: var(--font-data); font-weight: 600; font-size: 1.05rem; }
+.price small { color: var(--pencil); font-weight: 400; font-size: 0.8rem; }
+.lists { padding: 12px 18px 20px; display: grid; gap: 16px; align-content: start; }
+.lists h4 { margin: 0 0 6px; font-family: var(--font-data); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pencil); font-weight: 600; }
+.lists ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.lists li { display: grid; grid-template-columns: 1.2rem minmax(0, 1fr); gap: 6px; }
+.inc li::before { content: "+"; font-family: var(--font-data); color: var(--graphite); font-weight: 600; }
+.exc li::before { content: "−"; font-family: var(--font-data); color: var(--redline); font-weight: 600; }
+.exc li { color: var(--pencil); }
+.guarantee { margin: 0 18px 22px; padding: 12px 14px; background: var(--highlight); color: var(--highlight-ink); font-weight: 700; line-height: 1.35; }
+.guarantee small { display: block; font-weight: 400; font-size: var(--step--1); margin-top: 4px; }
+.scopes-foot { margin-top: 22px; color: var(--pencil); }
+
+/* ---------- 30-day schedule ---------- */
+.gantt { background: var(--panel); border: 1px solid var(--line); padding: 20px; display: grid; gap: 10px; }
+.g-row { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 14px; align-items: center; }
+.g-label { font-weight: 600; font-size: 0.95rem; }
+.g-label small { display: block; color: var(--pencil); font-weight: 400; font-size: 0.8rem; }
+.g-track { display: grid; grid-template-columns: repeat(30, minmax(0, 1fr)); height: 22px; background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: calc(100% / 6) 100%; }
+.g-bar { background: var(--graphite); border-radius: 2px; }
+.g-bar.red { background: var(--redline); }
+.g-axis .g-track { height: auto; background: none; font-family: var(--font-data); font-size: 0.7rem; color: var(--pencil); }
+.g-axis .g-track span { grid-column: span 5; }
+
+/* ---------- trades + faq ---------- */
+.split { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: 48px; align-items: start; }
+.divs { width: 100%; font-size: 0.95rem; }
+.divs td { padding: 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.divs td:first-child { font-family: var(--font-data); color: var(--redline); width: 4.5rem; font-weight: 600; }
+.taken { margin-top: 18px; color: var(--pencil); }
+.faq { border-top: 1.5px solid var(--graphite); }
+.faq details { border-bottom: 1px solid var(--line); padding: 14px 0; }
+.faq summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-data); color: var(--redline); }
+.faq details[open] summary::after { content: "−"; }
+.faq details p { margin-top: 8px; color: var(--pencil); max-width: 40rem; }
+
+/* ---------- audit request ---------- */
+.request { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
+.request-copy { display: grid; gap: 16px; }
+.request-copy ul { margin: 0; padding-left: 1.2rem; color: var(--pencil); display: grid; gap: 6px; }
+form.audit-form { background: var(--panel); border: 1.5px solid var(--graphite); padding: 24px; display: grid; gap: 14px; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.audit-form label { display: grid; gap: 6px; font-weight: 600; font-size: 0.95rem; }
+.audit-form input, .audit-form select {
+  width: 100%; min-height: 46px; padding: 10px 12px; border: 1.5px solid var(--graphite); border-radius: 2px;
+  background: var(--sheet); color: var(--graphite); font: var(--step-0) var(--font-body);
+}
+.audit-form input:focus, .audit-form select:focus { outline: none; border-color: var(--redline); box-shadow: 0 0 0 3px color-mix(in srgb, var(--redline) 25%, transparent); }
+.form-status { min-height: 1.5em; font-size: 0.95rem; }
+.form-status.error { color: var(--redline); }
+
+footer { border-top: 2px solid var(--graphite); padding-block: 24px 32px; font-size: var(--step--1); color: var(--pencil); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+footer nav { display: flex; gap: 18px; }
+
+@media (max-width: 920px) {
+  .hero, .calc, .split, .request { grid-template-columns: minmax(0, 1fr); }
+  .notes { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .result { position: static; }
+}
+@media (max-width: 720px) {
+  .scopes, .pair { grid-template-columns: minmax(0, 1fr); }
+  .g-row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .field { grid-template-columns: minmax(0, 1fr) 8rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap topbar">
+  <a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span><span data-cfg="agency">FullBacklog</span></a>
+  <p class="issued">For commercial specialty subcontractors · Div. 03–26</p>
+</header>
+
+<main>
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="tag"><b>Note 1</b> · Bid lists + bid follow-up</p>
+      <h1 id="hero-title">You can't win the jobs you're <span class="red">never invited to bid.</span></h1>
+      <p class="lede">FullBacklog gets commercial subs onto more general contractors' bid lists, then follows up on every bid after bid day so more of them turn into awarded work. Your estimators keep estimating.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#audit">Get your free Bid List Gap Audit</a>
+        <a class="btn btn-line" href="#pricing">See pricing</a>
+      </div>
+      <p class="promise"><span>10 new GC bid lists in 30 days or you don't pay</span><span>One sub per trade per metro</span></p>
+    </div>
+
+    <figure class="audit-card" aria-labelledby="audit-caption" style="margin:0">
+      <div class="audit-title">
+        <div><span class="tag">Bid List Gap Audit</span><strong id="audit-caption">Top GCs by commercial permits</strong></div>
+        <div><span class="tag">Example market</span><strong>Last 90 days</strong></div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>#</th><th>General contractor</th><th class="num">Permits</th><th class="num">Value</th><th>Invites you?</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="gc">Northgate Commercial Builders</td><td class="num">2</td><td class="num">$47.3M</td><td class="yes">Yes</td></tr>
+            <tr><td>2</td><td class="gc">Ironline Contractors</td><td class="num">1</td><td class="num">$27.0M</td><td class="no">No</td></tr>
+            <tr><td>3</td><td class="gc">Halvorsen Builders</td><td class="num">3</td><td class="num">$21.9M</td><td class="no">No</td></tr>
+            <tr><td>4</td><td class="gc">Summit Ridge Construction</td><td class="num">2</td><td class="num">$13.1M</td><td class="no">No</td></tr>
+            <tr><td>5</td><td class="gc">Crestline Construction</td><td class="num">2</td><td class="num">$13.0M</td><td class="no">No</td></tr>
+            <tr><td>6</td><td class="gc">Bluebonnet Building Group</td><td class="num">1</td><td class="num">$1.9M</td><td class="no">No</td></tr>
+            <tr><td>7</td><td class="gc">Marrow &amp; Pike GC</td><td class="num">3</td><td class="num">$1.8M</td><td class="yes">Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="audit-foot">
+        <span class="cloud" data-cloud>5 of the top 7 GCs never invite you</span>
+        <small><span class="delta" aria-hidden="true">1</span> Example data. Yours comes from public permit records.</small>
+      </div>
+    </figure>
+  </section>
+
+  <section class="band" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="tag">Why good subs run thin on backlog</p>
+        <h2 id="why-title">It's rarely the work. It's who knows you exist.</h2>
+      </div>
+      <div class="notes">
+        <article class="note">
+          <p class="tag"><b>△ 1</b> Invitations</p>
+          <h3>You only see the jobs you're invited to</h3>
+          <p>New GCs move into your market every year and pull permits you never hear about. If you're not in their bid list or BuildingConnected group, you never get the chance to price the work.</p>
+        </article>
+        <article class="note">
+          <p class="tag"><b>△ 2</b> Bid day</p>
+          <h3>Nobody chases the bid after it goes out</h3>
+          <p>Your estimator is on the next takeoff by the afternoon. Nobody asks where the number landed, whether the GC won the project, or who's running buyout, and that's where a lot of awards get decided.</p>
+        </article>
+        <article class="note">
+          <p class="tag"><b>△ 3</b> Concentration</p>
+          <h3>Three GCs are most of your revenue</h3>
+          <p>That works until one of them has a slow year. Every GC you add who actually awards you work makes next year's backlog less of a bet.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="calculator" aria-labelledby="calc-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="tag">Backlog calculator</p>
+        <h2 id="calc-title">What would more bid lists be worth?</h2>
+        <p>Example numbers. Put in yours.</p>
+      </div>
+      <div class="calc">
+        <form class="calc-form" id="calc-form" autocomplete="off">
+          <div class="field"><label for="bids">Bids you submit <small>per month today</small></label><div class="input"><input id="bids" type="number" inputmode="numeric" min="0" step="1" value="20"></div></div>
+          <div class="field"><label for="hit">Your hit rate <small>bids that turn into awards</small></label><div class="input"><input id="hit" type="number" inputmode="decimal" min="0" max="100" step="1" value="12"><span class="unit">%</span></div></div>
+          <div class="field"><label for="job">Average awarded job</label><div class="input"><input id="job" type="number" inputmode="numeric" min="0" step="5000" value="120000"><span class="unit">$</span></div></div>
+          <div class="field"><label for="margin">Gross margin</label><div class="input"><input id="margin" type="number" inputmode="decimal" min="0" max="100" step="1" value="15"><span class="unit">%</span></div></div>
+          <div class="field"><label for="newbids">Extra qualified bids <small>per month from new GC lists</small></label><div class="input"><input id="newbids" type="number" inputmode="numeric" min="0" step="1" value="4"></div></div>
+          <div class="field"><label for="lift">Hit-rate lift from follow-up <small>percentage points</small></label><div class="input"><input id="lift" type="number" inputmode="decimal" min="0" max="20" step="0.5" value="1"><span class="unit">pt</span></div></div>
+        </form>
+        <div class="result" aria-live="polite">
+          <div class="row"><span class="label">Extra awards per year</span><output id="out-awards">8.2</output></div>
+          <div class="row"><span class="label">Extra awarded work per year</span><output id="out-revenue">$979,200</output></div>
+          <div class="row big"><span class="label">Extra gross profit per year</span><span class="cloud" data-cloud><output id="out-profit">$146,880</output></span></div>
+          <p class="fine">Estimated only from the numbers you entered. Not a promise. The Bid Desk is $30,000 a year.</p>
+          <a class="btn btn-primary" href="#audit">See which GCs you're missing</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="pricing" aria-labelledby="scope-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="tag">Scope of work</p>
+        <h2 id="scope-title">Start with a 30-day sprint. Keep the Bid Desk.</h2>
+        <p>Written the way you'd write a proposal: inclusions, exclusions, and the number.</p>
+      </div>
+      <div class="scopes">
+        <article class="scope">
+          <div class="scope-head"><span>Item 1</span><span>30 days · one-time</span></div>
+          <div class="scope-title"><h3>Bid List Sprint</h3><p class="price">$2,500 <small>· founding rate $1,500 for our first 5 subs</small></p></div>
+          <div class="lists">
+            <div class="inc"><h4>Inclusions</h4><ul>
+              <li><span>Capabilities sheet and prequal package from your documents</span></li>
+              <li><span>BuildingConnected, PlanHub and ConstructConnect profiles fixed so ITBs match your trade, size and area</span></li>
+              <li><span>Bid List Gap Audit and a target list of 60–100 GCs you approve</span></li>
+              <li><span>Outreach to their estimators and precon managers as your business development rep</span></li>
+              <li><span>Prequal forms filled out, with your sign-off on each one</span></li>
+              <li><span>Weekly updates and a day-30 report with proof for every GC added</span></li>
+            </ul></div>
+            <div class="exc"><h4>Exclusions</h4><ul>
+              <li><span>Estimating, takeoffs and pricing. Every number stays yours.</span></li>
+              <li><span>Paid lead lists and advertising</span></li>
+            </ul></div>
+          </div>
+          <p class="guarantee">At least 10 new GC bid lists in 30 days, or you pay nothing.<small>A GC counts when they confirm you're on their list, accept your prequal, or send you an invitation to bid.</small></p>
+        </article>
+        <article class="scope">
+          <div class="scope-head"><span>Item 2</span><span>Monthly</span></div>
+          <div class="scope-title"><h3>Bid Desk</h3><p class="price">$2,500/month <small>· $1,500 onboarding, waived after a sprint</small></p></div>
+          <div class="lists">
+            <div class="inc"><h4>Inclusions</h4><ul>
+              <li><span>Every invitation to bid scored against your bid/no-bid rules, with a shortlist each Monday</span></li>
+              <li><span>Follow-up on every bid: receipt, feedback on your number, award status, buyout contact</span></li>
+              <li><span>Win/loss tracking and a scorecard showing which GCs actually award you</span></li>
+              <li><span>20+ new GCs contacted every month and prequals kept current</span></li>
+              <li><span>Monthly report and a 30-minute review</span></li>
+            </ul></div>
+            <div class="exc"><h4>Exclusions</h4><ul>
+              <li><span>Estimating and pricing decisions</span></li>
+              <li><span>Long contracts: 3-month minimum, then month to month</span></li>
+            </ul></div>
+          </div>
+          <p class="guarantee">25 new qualified invitations to bid in your first 90 days, or the next month is free.<small>Qualified means it scores as a bid under the rules you set with us.</small></p>
+        </article>
+      </div>
+      <p class="scopes-foot">Doing public or institutional work? Bid Desk + Public Work ($3,950/month) adds public bid sourcing and certification support. Ask on the call.</p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="sched-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="tag">Sprint schedule</p>
+        <h2 id="sched-title">What happens in the 30 days</h2>
+        <p>About two hours of your time in total: the kickoff, your documents, and approving what we send.</p>
+      </div>
+      <div class="gantt">
+        <div class="g-row g-axis" aria-hidden="true"><span></span><div class="g-track"><span>Day 1</span><span>Day 6</span><span>Day 11</span><span>Day 16</span><span>Day 21</span><span>Day 26</span></div></div>
+        <div class="g-row"><div class="g-label">Kickoff and documents<small>COI, EMR letter, bonding, project list</small></div><div class="g-track" role="img" aria-label="Days 1 to 3"><span class="g-bar" style="grid-column: 1 / 4"></span></div></div>
+        <div class="g-row"><div class="g-label">Capabilities and profiles<small>One-pager, bid platform cleanup</small></div><div class="g-track" role="img" aria-label="Days 3 to 7"><span class="g-bar" style="grid-column: 3 / 8"></span></div></div>
+        <div class="g-row"><div class="g-label">Gap audit and target list<small>60–100 GCs you approve</small></div><div class="g-track" role="img" aria-label="Days 4 to 8"><span class="g-bar" style="grid-column: 4 / 9"></span></div></div>
+        <div class="g-row"><div class="g-label">GC outreach<small>Email, phone, LinkedIn</small></div><div class="g-track" role="img" aria-label="Days 8 to 25"><span class="g-bar red" style="grid-column: 8 / 26"></span></div></div>
+        <div class="g-row"><div class="g-label">Prequal forms<small>Your sign-off on each</small></div><div class="g-track" role="img" aria-label="Days 10 to 28"><span class="g-bar" style="grid-column: 10 / 29"></span></div></div>
+        <div class="g-row"><div class="g-label">Day-30 report<small>GCs added, ITBs, next steps</small></div><div class="g-track" role="img" aria-label="Days 29 to 30"><span class="g-bar red" style="grid-column: 29 / 31"></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="trades-title">
+    <div class="wrap split">
+      <div>
+        <div class="head" style="margin-bottom:20px">
+          <p class="tag">Trades we take</p>
+          <h2 id="trades-title">One sub per trade, per metro</h2>
+          <p>Your competitors can't hire us in your market, and your bid information never sits next to theirs.</p>
+        </div>
+        <table class="divs">
+          <tbody>
+            <tr><td>Div 03</td><td>Concrete</td></tr>
+            <tr><td>Div 04</td><td>Masonry</td></tr>
+            <tr><td>Div 07</td><td>Roofing, waterproofing, insulation</td></tr>
+            <tr><td>Div 08</td><td>Glass, glazing, storefront, curtain wall</td></tr>
+            <tr><td>Div 09</td><td>Drywall and framing, ceilings, painting, flooring</td></tr>
+            <tr><td>Div 21</td><td>Fire protection</td></tr>
+            <tr><td>Div 26</td><td>Electrical</td></tr>
+          </tbody>
+        </table>
+        <p class="taken">Founding partners: <strong data-cfg="foundingSpotsLeft">5</strong> of 5 founding spots open. We're new, so you won't see made-up logos here; that's what the guarantee is for.</p>
+      </div>
+      <div class="faq">
+        <details open><summary>Do you email GCs as us?</summary><p>Yes, from a mailbox on your domain, signed as your business development rep. You approve the templates and the target list first, and every fact we use comes from your own documents.</p></details>
+        <details><summary>Do you estimate or bid for us?</summary><p>No. We never touch your numbers. We get you invited, help your estimators decide what's worth pricing, and chase every bid after it's submitted.</p></details>
+        <details><summary>Where does the GC list come from?</summary><p>Public building permit records for your market, bid boards, association directories and your own wish list. You see who pulled the most commercial permits in the last 90 days and approve who we contact.</p></details>
+        <details><summary>We tried BuildingConnected and got junk invitations.</summary><p>That's usually an over-broad profile. We set your trades, counties and project sizes so invitations match, and the Bid Desk filters what's left.</p></details>
+        <details><summary>Union or open shop?</summary><p>Both. We only target GCs who use your labor type for your trade on the kind of work you do.</p></details>
+        <details><summary>What if we're certified (MBE, WBE, DBE, SDVOSB)?</summary><p>Even better. GCs with participation goals on public and institutional work go looking for certified subs, and we make sure they find you.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="band" id="audit" aria-labelledby="audit-title">
+  <div class="wrap request">
+    <div class="request-copy">
+      <p class="tag">Free · No obligation</p>
+      <h2 class="display" id="audit-title">Get your Bid List Gap Audit</h2>
+      <p class="lede">Tell us your trade and metro. Within one business day we'll send:</p>
+      <ul>
+        <li>The top 25 general contractors by commercial permits in your market over the last 90 days</li>
+        <li>Each one's permit value and largest current project</li>
+        <li>A column for you to mark who already invites you, so the gap is obvious</li>
+      </ul>
+    </div>
+    <form class="audit-form" id="audit-form" novalidate>
+      <div class="pair">
+        <label for="f-name">Your name<input id="f-name" name="name" type="text" autocomplete="name" required></label>
+        <label for="f-company">Company<input id="f-company" name="company" type="text" autocomplete="organization" required></label>
+      </div>
+      <div class="pair">
+        <label for="f-trade">Trade
+          <select id="f-trade" name="trade" required>
+            <option value="">Choose your trade</option>
+            <option>Div 03 · Concrete</option>
+            <option>Div 04 · Masonry</option>
+            <option>Div 07 · Roofing / insulation</option>
+            <option>Div 08 · Glass and glazing</option>
+            <option>Div 09 · Drywall and framing</option>
+            <option>Div 09 · Painting</option>
+            <option>Div 09 · Flooring</option>
+            <option>Div 21 · Fire protection</option>
+            <option>Div 26 · Electrical</option>
+            <option>Other specialty trade</option>
+          </select>
+        </label>
+        <label for="f-metro">Metro<input id="f-metro" name="metro" type="text" placeholder="e.g. Austin" required></label>
+      </div>
+      <div class="pair">
+        <label for="f-email">Email<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+        <label for="f-phone">Phone (optional)<input id="f-phone" name="phone" type="tel" autocomplete="tel"></label>
+      </div>
+      <button class="btn btn-primary" type="submit" id="f-submit">Send me the audit</button>
+      <p class="form-status" id="form-status" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="year">2026</span> <span data-cfg="agency">FullBacklog</span> · <span data-cfg="address">123 Example St, Suite 200, Austin, TX 78701</span> · <span data-cfg="email">hello@getfullbacklog.com</span></p>
+    <nav aria-label="Legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+  </div>
+</footer>
+
+<script>
+// ---- Edit these before you publish ----
+const CONFIG = {
+  agency: "FullBacklog",
+  calendarUrl: "https://cal.com/your-link/15min",
+  formEndpoint: "",   // e.g. a Formspree / Basin / CRM webhook URL that accepts JSON
+  email: "hello@getfullbacklog.com",
+  address: "123 Example St, Suite 200, Austin, TX 78701",
+  foundingSpotsLeft: 5,
+};
+
+(function applyConfig() {
+  document.querySelectorAll("[data-cfg]").forEach((el) => {
+    const value = CONFIG[el.dataset.cfg];
+    if (value !== undefined && value !== "") el.textContent = value;
+  });
+  document.getElementById("year").textContent = String(new Date().getFullYear());
+})();
+
+// Revision clouds: scalloped markup drawn around any [data-cloud] element.
+(function clouds() {
+  const SVG = "http://www.w3.org/2000/svg";
+  function cloudPath(w, h, step) {
+    const nx = Math.max(2, Math.round(w / step)), ny = Math.max(2, Math.round(h / step));
+    const pts = [];
+    for (let i = 0; i < nx; i++) pts.push([(i * w) / nx, 0]);
+    for (let i = 0; i < ny; i++) pts.push([w, (i * h) / ny]);
+    for (let i = 0; i < nx; i++) pts.push([w - (i * w) / nx, h]);
+    for (let i = 0; i < ny; i++) pts.push([0, h - (i * h) / ny]);
+    let d = "M " + pts[0][0].toFixed(1) + " " + pts[0][1].toFixed(1);
+    for (let i = 1; i <= pts.length; i++) {
+      const [x, y] = pts[i % pts.length];
+      const [px, py] = pts[i - 1];
+      const r = (Math.hypot(x - px, y - py) * 0.62).toFixed(1);
+      d += ` A ${r} ${r} 0 0 1 ${x.toFixed(1)} ${y.toFixed(1)}`;
+    }
+    return d;
+  }
+  function draw(el) {
+    el.classList.add("cloud");
+    let svg = el.querySelector(":scope > svg.cloud-line");
+    if (!svg) {
+      svg = document.createElementNS(SVG, "svg");
+      svg.setAttribute("class", "cloud-line");
+      svg.setAttribute("aria-hidden", "true");
+      svg.appendChild(document.createElementNS(SVG, "path"));
+      el.appendChild(svg);
+    }
+    const pad = 12, inset = 4;
+    const w = el.offsetWidth + pad * 2, h = el.offsetHeight + pad * 2;
+    svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    const path = svg.firstChild;
+    path.setAttribute("d", cloudPath(w - inset * 2, h - inset * 2, 20));
+    path.setAttribute("transform", `translate(${inset} ${inset})`);
+  }
+  const targets = document.querySelectorAll("[data-cloud]");
+  targets.forEach(draw);
+  if ("ResizeObserver" in window) {
+    const observer = new ResizeObserver((entries) => entries.forEach((entry) => draw(entry.target)));
+    targets.forEach((el) => observer.observe(el));
+  }
+})();
+
+// Backlog calculator.
+(function calculator() {
+  const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+  const num = (id) => {
+    const value = parseFloat(document.getElementById(id).value);
+    return Number.isFinite(value) && value > 0 ? value : 0;
+  };
+  const pct = (id) => Math.min(num(id), 100) / 100;
+  function update() {
+    const awards = num("newbids") * 12 * pct("hit") + num("bids") * 12 * (Math.min(num("lift"), 100) / 100);
+    const revenue = awards * num("job");
+    document.getElementById("out-awards").textContent = awards.toFixed(1);
+    document.getElementById("out-revenue").textContent = money.format(revenue);
+    document.getElementById("out-profit").textContent = money.format(revenue * pct("margin"));
+  }
+  const form = document.getElementById("calc-form");
+  form.addEventListener("input", update);
+  form.addEventListener("submit", (event) => event.preventDefault());
+  update();
+})();
+
+// Gap Audit request form.
+(function auditForm() {
+  const form = document.getElementById("audit-form");
+  const status = document.getElementById("form-status");
+  const submit = document.getElementById("f-submit");
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    status.className = "form-status";
+    const required = ["f-name", "f-company", "f-trade", "f-metro", "f-email"];
+    const missing = required.filter((id) => !document.getElementById(id).value.trim());
+    if (missing.length) {
+      status.classList.add("error");
+      status.textContent = "Please fill in your name, company, trade, metro and email.";
+      document.getElementById(missing[0]).focus();
+      return;
+    }
+    const email = document.getElementById("f-email");
+    if (!email.checkValidity()) {
+      status.classList.add("error");
+      status.textContent = "That email address doesn't look right. Check it and try again.";
+      email.focus();
+      return;
+    }
+    const data = Object.fromEntries(new FormData(form).entries());
+    data.page = location.href;
+    if (!CONFIG.formEndpoint) {
+      status.textContent = "";
+      status.append("Almost done, " + data.name.split(" ")[0] + ". Pick a 15-minute slot and we'll walk you through your audit: ");
+      const link = document.createElement("a");
+      link.href = CONFIG.calendarUrl;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = "choose a time";
+      status.append(link);
+      console.warn("CONFIG.formEndpoint is empty: audit requests are not being sent anywhere.");
+      return;
+    }
+    submit.disabled = true;
+    submit.textContent = "Sending...";
+    try {
+      const response = await fetch(CONFIG.formEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      form.reset();
+      status.textContent = "Got it. Your " + data.metro + " audit will be in your inbox at " + data.email + " within one business day.";
+    } catch (error) {
+      status.classList.add("error");
+      status.textContent = "That didn't go through. Email us at " + CONFIG.email + " and we'll send your audit directly.";
+    } finally {
+      submit.disabled = false;
+      submit.textContent = "Send me the audit";
+    }
+  });
+})();
+</script>
+</body>
+</html>

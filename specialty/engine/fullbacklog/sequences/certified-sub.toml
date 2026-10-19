@@ -1,0 +1,61 @@
+name = "certified-sub"
+description = "Sub holds a certification (MBE, WBE, DBE, SBE, SDVOSB, HUBZone...). GCs chasing participation goals need them."
+when = "certifications found on the website or in the lead list"
+
+[[steps]]
+day = 0
+subject = "{{company}}'s {{certification}} certification"
+body = """
+Hi {{greeting_name}},
+
+Saw {{company}} is {{certification}}-certified.
+
+GCs bidding public and institutional work have participation goals to hit, and on a lot of those jobs they have to document their outreach to certified subs. Plenty of them still don't have a certified {{trade}} sub they trust in {{market}}.
+
+We get certified subs onto new GC bid lists: we build your prequal package, reach the estimators and precon managers, and track every invitation that comes back. If we don't get you on at least 10 new GC bid lists in 30 days, you don't pay.
+
+Worth 15 minutes?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 3
+subject = ""
+body = """
+{{greeting_name}}, here's how the 30 days work:
+
+1. We build a one-page capabilities sheet and a prequal package from what you already have (COI, EMR letter, bonding letter, project list).
+2. We pick the GCs actually building in {{market}} from public permit data and reach their estimators and precon managers as your business development rep.
+3. We fill out the prequal forms and track who adds you and who sends invitations.
+
+At least 10 new GC bid lists or you pay nothing. We only take one {{trade}} sub per market, so it would be just you.
+
+Open to it?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 7
+subject = ""
+body = """
+{{greeting_name}}, different question.
+
+When {{company}} submits a bid, who follows up after bid day? Finding out whether the GC won the job, where your number landed, and who's running buyout is where a lot of awards are decided.
+
+We run that follow-up for subs too. Worth a quick call?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 12
+subject = ""
+body = """
+{{greeting_name}}, I'll close the loop here.
+
+If more invitations to bid from GCs who need certified {{trade}} subs would help next year, grab 15 minutes here: {{calendar_link}}
+
+{{sender_first_name}}
+"""

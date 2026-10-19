@@ -1,0 +1,20 @@
+permit_number,permit_type_desc,work_class,description,issue_date,total_job_valuation,contractor_company_name,original_address1,original_city
+2026-101,Building Permit,New,New 4-story medical office building shell,2026-08-04,"$18,500,000.00",HALVORSEN BUILDERS INC,1 Example Pkwy,Austin
+2026-102,Building Permit,Remodel,Commercial tenant improvement - Suite 300 office,2026-08-11,"$1,250,000.00","Halvorsen Builders, Inc.",2 Example Pkwy,Austin
+2026-103,Building Permit,New,Elementary school classroom addition,2026-08-19,"$9,800,000.00",Crestline Construction LLC,3 Sample Blvd,Austin
+2026-104,Building Permit,Remodel,Restaurant interior finish-out,2026-08-22,"$640,000.00",Marrow & Pike General Contractors,4 Sample Blvd,Austin
+2026-105,Building Permit,New,Single family residence with attached garage,2026-08-25,"$520,000.00",Bluebonnet Homes,5 Demo Ln,Austin
+2026-106,Electrical Permit,New,Electrical service for new office building,2026-08-26,"$400,000.00",Sparkline Electric,1 Example Pkwy,Austin
+2026-107,Building Permit,New,New 220-unit multifamily apartment building,2026-09-02,"$41,000,000.00",Northgate Commercial Builders,6 Demo Ln,Austin
+2026-108,Building Permit,Remodel,Retail tenant improvement,2026-09-09,"$310,000.00",Marrow & Pike General Contractors,7 Test St,Austin
+2026-109,Building Permit,New,Warehouse distribution facility,2026-09-12,"$12,400,000.00",Summit Ridge Construction Co.,8 Test St,Austin
+2026-110,Building Permit,Remodel,Kitchen and bath remodel,2026-09-15,"$85,000.00",Owner,9 Placeholder Rd,Austin
+2026-111,Building Permit,Remodel,Hospital imaging suite renovation,2026-09-18,"$3,200,000.00",Crestline Construction LLC,10 Placeholder Rd,Austin
+2026-112,Building Permit,New,Data center electrical yard and shell,2026-09-24,"$27,000,000.00",Ironline Contractors,11 Mockup Ct,Austin
+2026-113,Building Permit,Remodel,Office interior remodel floors 2-4,2026-09-30,"$2,100,000.00",HALVORSEN BUILDERS,12 Mockup Ct,Austin
+2026-114,Building Permit,Remodel,Church fellowship hall addition,2026-10-03,"$1,900,000.00",Bluebonnet Building Group,13 Fictional Ave,Austin
+2026-115,Building Permit,New,Fence and pool,2026-10-05,"$45,000.00",Owner Builder,14 Fictional Ave,Austin
+2026-116,Building Permit,Remodel,Medical clinic tenant finish-out,2026-10-08,"$880,000.00",Marrow & Pike General Contractors,15 Fictional Ave,Austin
+2026-117,Building Permit,New,Parking structure,2026-10-10,"$6,300,000.00",Northgate Commercial Builders,16 Fictional Ave,Austin
+2026-118,Building Permit,Remodel,Interior alterations,2026-10-12,"$650,000.00",Summit Ridge Construction Co.,17 Fictional Ave,Austin
+2026-119,Building Permit,New,Hotel 140 rooms,2026-04-01,"$30,000,000.00",Old Window Builders,18 Fictional Ave,Austin

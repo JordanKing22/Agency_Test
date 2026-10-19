@@ -1,0 +1,63 @@
+name = "bid-chase"
+description = "Default. Opens on the follow-up gap after bid day, then offers the guaranteed bid-list sprint."
+when = "no stronger signal"
+
+[[steps]]
+day = 0
+subject = "after bid day"
+body = """
+Hi {{greeting_name}},
+
+{{personalization}}
+
+Quick question: when {{company}} submits a bid, who follows up after bid day?
+
+For most subs the honest answer is nobody. The estimator is already on the next takeoff, so you never hear whether the GC won the job, where your number landed, or who's running buyout.
+
+We run that for commercial {{trade}} subs, and we get you on new GC bid lists so there's more worth bidding. Start with a 30-day sprint: at least 10 new GC bid lists, or you don't pay.
+
+Worth a 15-minute call?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 3
+subject = ""
+body = """
+{{greeting_name}}, here's how the 30-day sprint works:
+
+1. We build a capabilities sheet and prequal package from what you already have (COI, EMR letter, bonding letter, project list).
+2. We pick the GCs actually building in your area from public permit data and reach their estimators and precon managers as your business development rep.
+3. We fill out the prequal forms and track who adds you and who sends invitations.
+
+At least 10 new GC bid lists or you pay nothing. We only take one {{trade}} sub per market.
+
+Open to it?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 7
+subject = ""
+body = """
+{{greeting_name}}, one more thought.
+
+Winter is when a lot of GCs price spring work. The subs they invite are the ones already sitting in their BuildingConnected or PlanHub lists, which is why the same few names keep winning.
+
+If {{company}} wants to be on more of those lists by spring, that's exactly what we do. Quick call?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 12
+subject = ""
+body = """
+{{greeting_name}}, I'll close the loop here.
+
+If more invitations to bid would help next year, grab 15 minutes here: {{calendar_link}}
+
+{{sender_first_name}}
+"""

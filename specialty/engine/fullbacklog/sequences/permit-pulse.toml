@@ -1,0 +1,57 @@
+name = "permit-pulse"
+description = "We have permit data for the lead's market, so we can name the GCs pulling the most commercial permits."
+when = "lead's market has 3+ GCs in the permit leaderboard"
+
+[[steps]]
+day = 0
+subject = "{{top_gc_1}} in {{market}}"
+body = """
+Hi {{greeting_name}},
+
+{{permits_90d}} commercial building permits were issued in {{market}} over the last 90 days, about {{permit_value_90d}} of work. {{top_gc_1}}, {{top_gc_2}} and {{top_gc_3}} pulled more of it than anyone else.
+
+Is {{company}} getting invitations to bid from all three?
+
+We get commercial {{trade}} subs onto new GC bid lists: prequal package, outreach to the estimators and precon managers, and tracking every invitation that comes back. If we don't get you on at least 10 new GC bid lists in 30 days, you don't pay.
+
+Worth 15 minutes?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 3
+subject = ""
+body = """
+{{greeting_name}}, I put together the full list: the top 25 GCs by commercial permits in {{market}} over the last 90 days, with their largest projects.
+
+Happy to send it over. Takes you 2 minutes to mark which ones invite you to bid, and the gaps are usually obvious.
+
+Want it?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 7
+subject = ""
+body = """
+{{greeting_name}}, one more idea.
+
+When {{company}} submits a bid, who follows up after bid day? Finding out whether the GC won the job, where your number landed, and who's running buyout is where a lot of awards are decided, and most estimators are already on the next takeoff.
+
+We run that follow-up for subs, alongside getting you on new bid lists. Worth a quick call?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 12
+subject = ""
+body = """
+{{greeting_name}}, I'll leave it here.
+
+If you want the {{market}} GC list or a look at your 2027 bid pipeline, grab 15 minutes: {{calendar_link}}
+
+{{sender_first_name}}
+"""

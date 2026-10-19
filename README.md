@@ -1,3 +1,15 @@
+# Agency playbooks
+
+This repo holds two complete, independent agencies. Each has its own niche, offer, outreach engine, website,
+sales scripts and delivery playbooks.
+
+| Agency | Sells to | Offer | Where |
+|---|---|---|---|
+| **BookedOut** | Owner-operated HVAC companies | Estimate Recovery Sprint ($1,500) → AI Dispatcher ($997/mo) | this page and the root folders (`docs/`, `engine/`, `sales/`, `website/`, `delivery/`) |
+| **FullBacklog** | Commercial specialty subcontractors (drywall, electrical, glazing, concrete, fire protection...) | Bid List Sprint ($2,500) → Bid Desk ($2,500/mo). No AI receptionist | [`specialty/`](specialty/README.md) |
+
+---
+
 # BookedOut: an AI dispatch and estimate-recovery agency for HVAC companies
 
 Everything you need to launch and sell: the niche, the offer, the outreach engine, the website, the sales scripts

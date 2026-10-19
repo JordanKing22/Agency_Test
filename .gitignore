@@ -4,6 +4,7 @@ engine/out/
 out/
 leads/
 engine/config.toml
+specialty/engine/config.toml
 
 # Python
 __pycache__/
