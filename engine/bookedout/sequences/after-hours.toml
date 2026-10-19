@@ -1,0 +1,65 @@
+name = "after-hours"
+description = "Lead's main line went to voicemail / rang out when we called after hours. Strongest hook we have."
+when = "audit_result is voicemail, no_answer or ivr"
+
+[[steps]]
+day = 0
+subject = "{{company}} after hours"
+body = """
+Hi {{greeting_name}},
+
+I called {{company}} {{audit_when}} and {{audit_phrase}}.
+
+Not a knock. Most shops your size do the same. But a homeowner with no heat at 9pm rarely leaves a voicemail. They call the next company on Google.
+
+We set up an AI dispatcher for HVAC companies. It answers every call 24/7, sends the true emergencies to your on-call tech, and books everything else straight into your schedule.
+
+You can call the demo line and try it yourself: {{demo_line}}
+
+Worth 15 minutes before the first real cold snap?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 3
+subject = ""
+body = """
+{{greeting_name}}, quick math on the after-hours calls.
+
+Say {{company}} misses 5 calls a week after 5pm, and 1 in 4 would have booked a $350 repair. That's about $22,000 a year going to competitors, before you count a single replacement.
+
+The AI dispatcher costs a fraction of that, and it has to pay for itself in 60 days or you get your setup fee back.
+
+Want me to send a 2-minute video of it handling a no-heat call?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 7
+subject = ""
+body = """
+{{greeting_name}}, different idea.
+
+Most HVAC shops have a few hundred replacement quotes from the last year that never closed. Those homeowners already told you they need a system.
+
+We run a 14-day campaign that works back through those quotes and books appointments on your calendar. If we don't book at least 5, you don't pay.
+
+Is that worth a look for {{company}}?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 12
+subject = ""
+body = """
+{{greeting_name}}, I'll close the loop here.
+
+If after-hours calls aren't a priority right now, no problem. If they become one when the first cold week hits, the demo line stays open: {{demo_line}}
+
+Or grab 15 minutes here: {{calendar_link}}
+
+{{sender_first_name}}
+"""

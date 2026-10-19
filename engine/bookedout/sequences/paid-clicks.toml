@@ -1,0 +1,57 @@
+name = "paid-clicks"
+description = "Website runs Google Ads but has no online booking and no chat: they pay for clicks that can only become calls."
+when = "runs_google_ads and no booking_vendor and no chat_vendor"
+
+[[steps]]
+day = 0
+subject = "{{company}}'s Google Ads after 5pm"
+body = """
+Hi {{greeting_name}},
+
+Noticed {{company}} runs Google Ads, but {{domain}} doesn't have online booking or chat. So after 5pm, every click you pay for has one option: call and hope someone picks up.
+
+We plug an AI dispatcher into your existing number. It answers 24/7, sends emergencies to your on-call tech, and books jobs into your schedule, so the clicks you pay for at 8pm turn into jobs instead of voicemails.
+
+Want to hear it? Call the demo line: {{demo_line}}
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 3
+subject = ""
+body = """
+{{greeting_name}}, one more thought on the ads.
+
+Whatever you pay Google per call, a call that hits voicemail costs exactly the same and returns nothing. Fixing that is usually the cheapest way to lower your cost per booked job, with no change to your ad budget.
+
+The dispatcher has to pay for itself in 60 days or you get your setup fee back. Open to a 15-minute look?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 7
+subject = ""
+body = """
+{{greeting_name}}, different idea.
+
+Most HVAC shops have a few hundred replacement quotes from the last year that never closed. We run a 14-day campaign that works back through them and books appointments on your calendar. If we don't book at least 5, you don't pay.
+
+Worth a look for {{company}}?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 12
+subject = ""
+body = """
+{{greeting_name}}, I'll close the loop here.
+
+If you ever want to see what happens to your after-hours ad clicks, the demo line stays open: {{demo_line}}
+
+Or grab 15 minutes here: {{calendar_link}}
+
+{{sender_first_name}}
+"""

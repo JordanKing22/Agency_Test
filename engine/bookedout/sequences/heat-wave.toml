@@ -1,0 +1,57 @@
+name = "heat-wave"
+description = "NWS forecast shows extreme heat in the lead's city this week. The summer twin of cold-snap."
+when = "forecast_high_f >= targeting.hot_threshold_f"
+
+[[steps]]
+day = 0
+subject = "{{city}}, {{forecast_high}}°"
+body = """
+Hi {{greeting_name}},
+
+Looks like {{city}} hits {{forecast_high}}°F {{forecast_high_when}}. When the AC calls stack up, the ones that go to voicemail usually book with whoever answers first.
+
+We give HVAC shops an AI dispatcher that answers every call 24/7, sends the no-cool emergencies to your on-call tech, and books the rest straight into your schedule.
+
+Live on your overflow line within 72 hours. Try the demo line yourself: {{demo_line}}
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 2
+subject = ""
+body = """
+{{greeting_name}}, the obvious question is whether homeowners hate talking to AI.
+
+Call {{demo_line}} and pretend your AC just died. It tells callers up front that it's a virtual assistant, hands off to a person whenever they ask, and never quotes a price you haven't approved.
+
+If it would embarrass {{company}}, you'll know in 60 seconds.
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 5
+subject = ""
+body = """
+{{greeting_name}}, different idea.
+
+Most HVAC shops have a few hundred replacement quotes from the last year that never closed. We run a 14-day campaign that works back through them and books appointments on your calendar. If we don't book at least 5, you don't pay.
+
+Worth a look for {{company}}?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 10
+subject = ""
+body = """
+{{greeting_name}}, I'll leave it here.
+
+If the next heat wave buries your phones, the demo line is still open: {{demo_line}}
+
+Or grab 15 minutes here: {{calendar_link}}
+
+{{sender_first_name}}
+"""

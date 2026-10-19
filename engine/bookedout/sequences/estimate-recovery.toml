@@ -1,0 +1,61 @@
+name = "estimate-recovery"
+description = "Default sequence. Leads with the low-risk front-end offer: book 5 appointments from old quotes or don't pay."
+when = "no stronger signal"
+
+[[steps]]
+day = 0
+subject = "{{company}}'s unsold quotes"
+body = """
+Hi {{greeting_name}},
+
+{{personalization}}
+
+Quick question: how many replacement quotes did {{company}} send in the last 12 months that never closed?
+
+For most shops it's a few hundred. Even 100 quotes at $10k is $1M of work that homeowners already told you they need.
+
+We run a 14-day campaign that works back through those quotes and books appointments on your calendar. If we don't book at least 5, you don't pay.
+
+Worth a 15-minute call?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 3
+subject = ""
+body = """
+{{greeting_name}}, here's how the 14 days work:
+
+1. You export unsold estimates from ServiceTitan, Housecall Pro or Jobber. It takes 5 minutes and we'll walk you through it.
+2. We build the offer with you and run the email, text (to customers who opted in) and phone follow-up.
+3. Booked appointments land on your calendar with notes. Your team shows up and sells.
+
+Flat fee, at least 5 booked appointments or you pay nothing. Open to it?
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 7
+subject = ""
+body = """
+{{greeting_name}}, one more idea, then I'll leave you alone.
+
+When {{company}} misses a call after hours, where does it go? For most shops it's voicemail, and most homeowners won't leave one.
+
+We set up an AI dispatcher that answers 24/7 and books jobs into your schedule. Call it yourself and see what you think: {{demo_line}}
+
+{{sender_first_name}}
+"""
+
+[[steps]]
+day = 12
+subject = ""
+body = """
+{{greeting_name}}, I'll close the loop here.
+
+If old quotes or after-hours calls become a priority this winter, I'm easy to find. Grab 15 minutes here: {{calendar_link}}
+
+{{sender_first_name}}
+"""

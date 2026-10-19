@@ -1,0 +1,21 @@
+# Copy to config.toml (same folder you run `bookedout` from) and edit.
+
+[sender]
+first_name = "Jordan"                              # signs every email
+agency = "BookedOut"
+calendar_link = "https://cal.com/your-link/15min"  # only used in breakup emails
+demo_line = "(555) 010-0199"                       # the phone number of your demo AI dispatcher
+website = "https://getbookedout.com"
+
+[targeting]
+cold_threshold_f = 25    # forecast low at/below this -> cold-snap sequence
+hot_threshold_f = 95     # forecast high at/above this -> heat-wave sequence
+min_export_score = 35    # don't spend email volume on leads below this
+
+[ai]
+model = "claude-opus-5-5"
+effort = "low"           # one-line openers don't need deep thinking
+workers = 4
+
+[nws]
+user_agent = "BookedOut outreach engine (contact: you@example.com)"

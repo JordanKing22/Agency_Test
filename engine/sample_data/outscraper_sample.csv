@@ -1,0 +1,8 @@
+name,site,phone,full_address,city,state,latitude,longitude,rating,reviews,category,email_1
+"Northstar Heating & Air, LLC",https://www.northstarheating.example/,(612) 555-0101,"100 Example Ave, Minneapolis, MN 55401",Minneapolis,Minnesota,44.9778,-93.2650,4.8,412,HVAC contractor,office@northstarheating.example
+Lakeside Comfort Systems Inc.,http://lakesidecomfort.example,612-555-0102,"200 Sample St, Saint Paul, MN 55101",Saint Paul,Minnesota,44.9537,-93.0900,4.6,87,Heating contractor,
+Prairie Furnace & Cooling,https://prairiefurnace.example/contact,+1 952 555 0103,"300 Demo Rd, Bloomington, MN 55420",Bloomington,Minnesota,44.8408,-93.2983,4.9,1530,HVAC contractor,service@prairiefurnace.example
+Badger Mechanical,https://badgermech.example,(414) 555-0104,"400 Test Blvd, Milwaukee, WI 53202",Milwaukee,Wisconsin,43.0389,-87.9065,4.3,22,Mechanical contractor,
+One Hour Heating & Air Conditioning of Testville,https://onehour-testville.example,(312) 555-0105,"500 Placeholder Ln, Chicago, IL 60601",Chicago,Illinois,41.8781,-87.6298,4.7,2210,HVAC contractor,info@onehour-testville.example
+Riverbend Plumbing,https://facebook.com/riverbendplumbing,(614) 555-0106,"600 Fictional Way, Columbus, OH 43215",Columbus,Ohio,39.9612,-82.9988,4.1,9,Plumber,
+Summit Heating and Air,https://summitheatingair.example,(303) 555-0107,"700 Mockup Dr, Denver, CO 80202",Denver,Colorado,39.7392,-104.9903,4.9,265,Air conditioning contractor,

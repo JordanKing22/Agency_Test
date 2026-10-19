@@ -1,0 +1,14 @@
+# Engine runtime data (contains lead PII - never commit)
+*.db
+engine/out/
+out/
+leads/
+engine/config.toml
+
+# Python
+__pycache__/
+*.egg-info/
+.venv/
+venv/
+
+.DS_Store
